@@ -1,0 +1,352 @@
+[26-Feb-2026 12:45:45 UTC] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in /home5/solcareaga/public_html/com360/comercio360/s.php on line 3
+[26-Feb-2026 12:45:45 UTC] PHP Warning:  Undefined array key "logout" in /home5/solcareaga/public_html/com360/comercio360/s.php on line 5
+[26-Feb-2026 12:45:45 UTC] PHP Warning:  Undefined variable $_SESSION in /home5/solcareaga/public_html/com360/comercio360/s.php on line 10
+[02-Mar-2026 12:19:24 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught ValueError: mysqli_query(): Argument #2 ($query) cannot be empty in /home5/solcareaga/public_html/com360/comercio360/app/database.php:30
+Stack trace:
+#0 /home5/solcareaga/public_html/com360/comercio360/app/database.php(30): mysqli_query(Object(mysqli), '')
+#1 /home5/solcareaga/public_html/com360/comercio360/app/model/LoginData.php(17): Database->query(NULL)
+#2 /home5/solcareaga/public_html/com360/comercio360/app/action/login.php(19): LoginData->loguear(Array)
+#3 /home5/solcareaga/public_html/com360/comercio360/app/control.php(27): require_once('/home5/solcarea...')
+#4 /home5/solcareaga/public_html/com360/comercio360/index.php(21): Control->load_action('login', NULL)
+#5 {main}
+  thrown in /home5/solcareaga/public_html/com360/comercio360/app/database.php on line 30
+[06-Mar-2026 14:58:23 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught ValueError: mysqli_query(): Argument #2 ($query) cannot be empty in /home5/solcareaga/public_html/com360/comercio360/app/database.php:30
+Stack trace:
+#0 /home5/solcareaga/public_html/com360/comercio360/app/database.php(30): mysqli_query(Object(mysqli), '')
+#1 /home5/solcareaga/public_html/com360/comercio360/app/model/LoginData.php(17): Database->query(NULL)
+#2 /home5/solcareaga/public_html/com360/comercio360/app/action/login.php(19): LoginData->loguear(Array)
+#3 /home5/solcareaga/public_html/com360/comercio360/app/control.php(27): require_once('/home5/solcarea...')
+#4 /home5/solcareaga/public_html/com360/comercio360/index.php(21): Control->load_action('login', NULL)
+#5 {main}
+  thrown in /home5/solcareaga/public_html/com360/comercio360/app/database.php on line 30
+[06-Mar-2026 16:57:22 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/com360/comercio360/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/com360/comercio360/app/control.php(17): require_once()
+#1 /home5/solcareaga/public_html/com360/comercio360/index.php(24): Control->load_view('index?id=2', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/com360/comercio360/app/views/404-view.php on line 87
+[10-Mar-2026 12:50:25 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(17): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_resume...', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[10-Mar-2026 13:19:26 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(17): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_cobran...', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[12-Mar-2026 13:02:54 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(17): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('login?id=44', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[12-Mar-2026 13:02:58 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(17): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('login?', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[12-Mar-2026 16:59:20 America/Argentina/Buenos_Aires] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home5/solcareaga/public_html/gestionConsorcios/app/control.php on line 3
+[15-Mar-2026 11:21:47 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(25): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('dashbiard', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[15-Mar-2026 11:37:54 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(25): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('selector_comtex...', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[15-Mar-2026 13:00:46 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to undefined function get_by_id() in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:20
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 20
+[15-Mar-2026 13:02:46 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to undefined function get_by_id() in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:20
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 20
+[15-Mar-2026 13:02:58 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 13:03:00 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 13:03:01 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 13:03:29 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 13:03:30 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 13:03:30 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 13:03:30 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 13:05:33 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "BarriosData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:21
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 21
+[15-Mar-2026 15:47:20 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "UnidadesFuncionalesData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:25
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 25
+[15-Mar-2026 15:59:39 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:283
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 283
+[15-Mar-2026 15:59:56 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:283
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 283
+[15-Mar-2026 16:04:17 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:283
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 283
+[15-Mar-2026 16:04:46 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:283
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 283
+[15-Mar-2026 16:05:31 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:283
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 283
+[15-Mar-2026 16:15:21 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:283
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(443): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 283
+[15-Mar-2026 19:22:22 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Class "PersonasData" not found in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php:443
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(446): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('index', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/index-view.php on line 443
+[15-Mar-2026 19:22:50 America/Argentina/Buenos_Aires] PHP Fatal error:  Cannot declare class BarriosData, because the name is already in use in /home5/solcareaga/public_html/gestionConsorcios/app/model/PersonasData.php on line 0
+[15-Mar-2026 19:23:01 America/Argentina/Buenos_Aires] PHP Fatal error:  Cannot declare class BarriosData, because the name is already in use in /home5/solcareaga/public_html/gestionConsorcios/app/model/PersonasData.php on line 0
+[15-Mar-2026 19:23:28 America/Argentina/Buenos_Aires] PHP Fatal error:  Cannot declare class BarriosData, because the name is already in use in /home5/solcareaga/public_html/gestionConsorcios/app/model/PersonasData.php on line 0
+[15-Mar-2026 19:23:28 America/Argentina/Buenos_Aires] PHP Fatal error:  Cannot declare class BarriosData, because the name is already in use in /home5/solcareaga/public_html/gestionConsorcios/app/model/PersonasData.php on line 0
+[15-Mar-2026 21:09:45 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function get_cobranza_by_id_empresa() on null in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php:18
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(446): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('cobranzas_lista...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php on line 18
+[15-Mar-2026 21:10:41 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function get_cobranza_by_id_empresa() on null in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php:18
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(446): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('cobranzas_lista...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php on line 18
+[15-Mar-2026 21:10:43 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function get_cobranza_by_id_empresa() on null in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php:18
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(446): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('cobranzas_lista...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php on line 18
+[15-Mar-2026 21:10:49 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function get_cobranza_by_id_empresa() on null in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php:18
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(446): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('cobranzas_lista...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php on line 18
+[15-Mar-2026 21:11:44 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function get_cobranza_by_id_empresa() on null in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php:18
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(446): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('cobranzas_lista...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php on line 18
+[15-Mar-2026 21:14:59 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function get_cobranza_by_id_empresa() on null in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php:20
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(446): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('cobranzas_lista...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/cobranzas_listado-view.php on line 20
+[17-Mar-2026 09:52:19 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(27): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[17-Mar-2026 09:52:33 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(27): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[17-Mar-2026 09:52:42 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_URL" in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php:87
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(27): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#2 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/404-view.php on line 87
+[17-Mar-2026 11:15:28 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Failed opening required '/home5/solcareaga/public_html/gestionConsorcios/app/views/../data/expensas_data.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_pdf-view.php:2
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(447): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_pdf', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_pdf-view.php on line 2
+[18-Mar-2026 09:04:20 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Failed opening required '/home5/solcareaga/public_html/gestionConsorcios/app/views/../data/expensas_data.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php:1
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(447): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_cobran...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php on line 1
+[18-Mar-2026 09:04:24 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Failed opening required '/home5/solcareaga/public_html/gestionConsorcios/app/views/../data/expensas_data.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php:1
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(447): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_cobran...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php on line 1
+[18-Mar-2026 09:04:25 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Failed opening required '/home5/solcareaga/public_html/gestionConsorcios/app/views/../data/expensas_data.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php:1
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(447): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_cobran...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php on line 1
+[18-Mar-2026 09:04:25 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Failed opening required '/home5/solcareaga/public_html/gestionConsorcios/app/views/../data/expensas_data.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php:1
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(447): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_cobran...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php on line 1
+[18-Mar-2026 09:04:29 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Failed opening required '/home5/solcareaga/public_html/gestionConsorcios/app/views/../data/expensas_data.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php:1
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(447): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_cobran...', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_cobranzas-view.php on line 1
+[18-Mar-2026 14:30:10 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php:573
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php on line 573
+[18-Mar-2026 14:30:45 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php:573
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php on line 573
+[18-Mar-2026 14:30:46 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php:573
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php on line 573
+[18-Mar-2026 14:30:47 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php:573
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php on line 573
+[18-Mar-2026 14:52:01 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php:573
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php on line 573
+[18-Mar-2026 14:54:47 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php:573
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php on line 573
+[18-Mar-2026 15:00:26 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php:578
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_gastos', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_gastos-view.php on line 578
+[19-Mar-2026 10:42:30 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Failed opening required '/home5/solcareaga/public_html/gestionConsorcios/app/views/../data/expensas_data.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_pdf-view.php:2
+Stack trace:
+#0 /home5/solcareaga/public_html/gestionConsorcios/app/layout/layout.php(448): require_once()
+#1 /home5/solcareaga/public_html/gestionConsorcios/app/control.php(21): require_once('/home5/solcarea...')
+#2 /home5/solcareaga/public_html/gestionConsorcios/index.php(24): Control->load_view('expensas_pdf', NULL)
+#3 {main}
+  thrown in /home5/solcareaga/public_html/gestionConsorcios/app/views/expensas_pdf-view.php on line 2

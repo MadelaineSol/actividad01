@@ -1,0 +1,33 @@
+body{
+background:#f4f6fb;
+font-family: 'Segoe UI', sans-serif;
+}
+
+.card{
+border-radius:14px;
+border:none;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.kpi{
+padding:20px;
+text-align:center;
+}
+
+.kpi h4{
+font-weight:700;
+color:#16c60c;
+}
+
+.table{
+font-size:14px;
+}
+
+.table thead{
+background:#f1f3f7;
+}
+
+.badge{
+padding:6px 10px;
+border-radius:6px;
+}
