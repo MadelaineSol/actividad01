@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuestos - Taller Mecanico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-wrench logo-icon"></i>
+            <h3>AutoTaller Pro</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="./vehiculos.html"><i class="fas fa-car"></i> Vehiculos</a>
+            <a href="./ordenes.html"><i class="fas fa-clipboard-list"></i> Ordenes de Trabajo</a>
+            <a href="./presupuestos.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Presupuestos</a>
+            <a href="./pagos.html"><i class="fas fa-money-bill-wave"></i> Ordenes de Pago</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-file-invoice-dollar me-2"></i>Presupuestos</h1>
+            <button class="btn btn-primary-custom" onclick="openModal()">
+                <i class="fas fa-plus me-2"></i>Nuevo Presupuesto
+            </button>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="form-control" placeholder="Buscar..." id="searchInput" oninput="renderTable()">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select" id="filterEstado" onchange="renderTable()">
+                    <option value="">Todos los estados</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="Rechazado">Rechazado</option>
+                </select>
+            </div>
+            <div class="col-md-2 ms-auto text-end">
+                <span style="color: var(--text-secondary); line-height: 42px;" id="totalCount"></span>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>N° Presupuesto</th>
+                            <th>Orden</th>
+                            <th>Vehiculo</th>
+                            <th>Propietario</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Presupuesto -->
+    <div class="modal fade" id="presupuestoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Nuevo Presupuesto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="presupuestoForm">
+                        <input type="hidden" id="presupuestoId">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Orden de Trabajo *</label>
+                                <select class="form-select" id="ordenId" required>
+                                    <option value="">Seleccionar orden...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Validez (dias)</label>
+                                <input type="number" class="form-control" id="validezDias" value="15" min="1">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Notas</label>
+                                <textarea class="form-control" id="notas" rows="2" placeholder="Notas adicionales..."></textarea>
+                            </div>
+                        </div>
+
+                        <h6 class="mb-3">Items del presupuesto</h6>
+                        <div id="itemsContainer"></div>
+                        <button type="button" class="btn btn-outline-custom btn-sm mt-2" onclick="addItem()">
+                            <i class="fas fa-plus me-1"></i>Agregar item
+                        </button>
+
+                        <div class="mt-4 p-3" style="background: var(--bg-input); border-radius: 8px;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong style="font-size: 1.1rem;">TOTAL:</strong>
+                                <strong style="font-size: 1.3rem; color: var(--secondary);" id="totalPresupuesto">$0,00</strong>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="savePresupuesto()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalle -->
+    <div class="modal fade" id="detalleModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalle de Presupuesto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="detalleBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="window.print()"><i class="fas fa-print me-2"></i>Imprimir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        let presupuestoModalInst, detalleModalInst;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            presupuestoModalInst = new bootstrap.Modal(document.getElementById('presupuestoModal'));
+            detalleModalInst = new bootstrap.Modal(document.getElementById('detalleModal'));
+            renderTable();
+        });
+
+        function loadOrdenesSelect() {
+            const select = document.getElementById('ordenId');
+            const ordenes = Ordenes.getAll();
+            select.innerHTML = '<option value="">Seleccionar orden...</option>' +
+                ordenes.map(o => {
+                    const v = Vehiculos.getById(o.vehiculoId);
+                    return `<option value="${o.id}">${o.numero} - ${v ? v.patente : 'Sin vehiculo'} (${o.estado})</option>`;
+                }).join('');
+        }
+
+        let itemCount = 0;
+        function addItem(data = null) {
+            itemCount++;
+            const container = document.getElementById('itemsContainer');
+            const div = document.createElement('div');
+            div.className = 'item-row';
+            div.id = 'item-' + itemCount;
+            div.innerHTML = `
+                <div class="form-group" style="flex:3">
+                    <label class="form-label" style="font-size:0.8rem">Descripcion</label>
+                    <input type="text" class="form-control form-control-sm item-desc" placeholder="Repuesto o servicio" value="${data ? data.descripcion : ''}" required>
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label class="form-label" style="font-size:0.8rem">Cant.</label>
+                    <input type="number" class="form-control form-control-sm item-cant" min="1" value="${data ? data.cantidad : 1}" oninput="calcularTotal()">
+                </div>
+                <div class="form-group" style="flex:1.5">
+                    <label class="form-label" style="font-size:0.8rem">Precio Unit.</label>
+                    <input type="number" class="form-control form-control-sm item-precio" min="0" step="0.01" value="${data ? data.precioUnitario : ''}" placeholder="0.00" oninput="calcularTotal()">
+                </div>
+                <div class="form-group" style="flex:1.5">
+                    <label class="form-label" style="font-size:0.8rem">Subtotal</label>
+                    <input type="text" class="form-control form-control-sm item-subtotal" readonly value="${data ? formatCurrency(data.cantidad * data.precioUnitario) : '$0,00'}">
+                </div>
+                <button type="button" class="btn-remove-item" onclick="removeItem('item-${itemCount}')"><i class="fas fa-times"></i></button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeItem(id) {
+            document.getElementById(id).remove();
+            calcularTotal();
+        }
+
+        function calcularTotal() {
+            let total = 0;
+            document.querySelectorAll('.item-row').forEach(row => {
+                const cant = parseFloat(row.querySelector('.item-cant').value) || 0;
+                const precio = parseFloat(row.querySelector('.item-precio').value) || 0;
+                const subtotal = cant * precio;
+                row.querySelector('.item-subtotal').value = formatCurrency(subtotal);
+                total += subtotal;
+            });
+            document.getElementById('totalPresupuesto').textContent = formatCurrency(total);
+        }
+
+        function getItems() {
+            const items = [];
+            document.querySelectorAll('.item-row').forEach(row => {
+                items.push({
+                    descripcion: row.querySelector('.item-desc').value,
+                    cantidad: parseFloat(row.querySelector('.item-cant').value) || 0,
+                    precioUnitario: parseFloat(row.querySelector('.item-precio').value) || 0
+                });
+            });
+            return items;
+        }
+
+        function renderTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const estadoFilter = document.getElementById('filterEstado').value;
+            let presupuestos = Presupuestos.getAll();
+
+            if (search) {
+                presupuestos = presupuestos.filter(p => {
+                    const orden = Ordenes.getById(p.ordenId);
+                    return p.numero.toLowerCase().includes(search) ||
+                        (orden && orden.numero.toLowerCase().includes(search));
+                });
+            }
+            if (estadoFilter) presupuestos = presupuestos.filter(p => p.estado === estadoFilter);
+
+            document.getElementById('totalCount').textContent = presupuestos.length + ' presupuesto(s)';
+            const tbody = document.getElementById('tableBody');
+
+            if (presupuestos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><p>No hay presupuestos</p></div></td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = presupuestos.reverse().map(p => {
+                const orden = Ordenes.getById(p.ordenId);
+                const vehiculo = orden ? Vehiculos.getById(orden.vehiculoId) : null;
+                return `<tr>
+                    <td><strong>${p.numero}</strong></td>
+                    <td>${orden ? orden.numero : '-'}</td>
+                    <td>${vehiculo ? vehiculo.patente + ' ' + vehiculo.marca + ' ' + vehiculo.modelo : '-'}</td>
+                    <td>${vehiculo ? vehiculo.propietario : '-'}</td>
+                    <td><strong>${formatCurrency(p.total)}</strong></td>
+                    <td><span class="badge-status ${getBadgeClass(p.estado)}">${p.estado}</span></td>
+                    <td>${formatDate(p.fecha)}</td>
+                    <td>
+                        <button class="btn-action view" onclick="verDetalle(${p.id})" title="Ver detalle"><i class="fas fa-eye"></i></button>
+                        ${p.estado === 'Pendiente' ? `
+                            <button class="btn-action" onclick="cambiarEstado(${p.id}, 'Aprobado')" title="Aprobar" style="color:#66bb6a"><i class="fas fa-check"></i></button>
+                            <button class="btn-action" onclick="cambiarEstado(${p.id}, 'Rechazado')" title="Rechazar" style="color:#ef5350"><i class="fas fa-times"></i></button>
+                        ` : ''}
+                        <button class="btn-action delete" onclick="deletePresupuesto(${p.id})" title="Eliminar"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function openModal() {
+            document.getElementById('presupuestoForm').reset();
+            document.getElementById('presupuestoId').value = '';
+            document.getElementById('itemsContainer').innerHTML = '';
+            document.getElementById('totalPresupuesto').textContent = '$0,00';
+            itemCount = 0;
+            loadOrdenesSelect();
+            addItem();
+            presupuestoModalInst.show();
+        }
+
+        function savePresupuesto() {
+            const form = document.getElementById('presupuestoForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+
+            const items = getItems();
+            if (items.length === 0 || items.some(i => !i.descripcion)) {
+                showToast('Complete todos los items del presupuesto', 'error');
+                return;
+            }
+
+            const total = Presupuestos.calcularTotal(items);
+            const presupuesto = {
+                ordenId: parseInt(document.getElementById('ordenId').value),
+                validezDias: parseInt(document.getElementById('validezDias').value) || 15,
+                notas: document.getElementById('notas').value,
+                items,
+                total
+            };
+
+            const id = document.getElementById('presupuestoId').value;
+            if (id) presupuesto.id = parseInt(id);
+
+            Presupuestos.save(presupuesto);
+            presupuestoModalInst.hide();
+            renderTable();
+            showToast('Presupuesto guardado');
+        }
+
+        function cambiarEstado(id, estado) {
+            const action = estado === 'Aprobado' ? 'aprobar' : 'rechazar';
+            if (confirm(`¿Desea ${action} este presupuesto?`)) {
+                Presupuestos.cambiarEstado(id, estado);
+                renderTable();
+                showToast('Presupuesto ' + estado.toLowerCase());
+            }
+        }
+
+        function deletePresupuesto(id) {
+            if (confirm('¿Eliminar este presupuesto?')) {
+                Presupuestos.delete(id);
+                renderTable();
+                showToast('Presupuesto eliminado', 'warning');
+            }
+        }
+
+        function verDetalle(id) {
+            const p = Presupuestos.getById(id);
+            const orden = Ordenes.getById(p.ordenId);
+            const vehiculo = orden ? Vehiculos.getById(orden.vehiculoId) : null;
+            const body = document.getElementById('detalleBody');
+
+            const itemsHtml = (p.items || []).map((item, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${item.descripcion}</td>
+                    <td class="text-center">${item.cantidad}</td>
+                    <td class="text-end">${formatCurrency(item.precioUnitario)}</td>
+                    <td class="text-end">${formatCurrency(item.cantidad * item.precioUnitario)}</td>
+                </tr>
+            `).join('');
+
+            body.innerHTML = `
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 style="color: var(--secondary)">Presupuesto ${p.numero}</h6>
+                        <div class="detail-row"><span class="detail-label">Estado:</span><span class="detail-value"><span class="badge-status ${getBadgeClass(p.estado)}">${p.estado}</span></span></div>
+                        <div class="detail-row"><span class="detail-label">Fecha:</span><span class="detail-value">${formatDate(p.fecha)}</span></div>
+                        <div class="detail-row"><span class="detail-label">Validez:</span><span class="detail-value">${p.validezDias || 15} dias</span></div>
+                        <div class="detail-row"><span class="detail-label">Orden:</span><span class="detail-value">${orden ? orden.numero : '-'}</span></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 style="color: var(--secondary)">Cliente</h6>
+                        ${vehiculo ? `
+                            <div class="detail-row"><span class="detail-label">Propietario:</span><span class="detail-value">${vehiculo.propietario}</span></div>
+                            <div class="detail-row"><span class="detail-label">Vehiculo:</span><span class="detail-value">${vehiculo.patente} - ${vehiculo.marca} ${vehiculo.modelo}</span></div>
+                            <div class="detail-row"><span class="detail-label">Telefono:</span><span class="detail-value">${vehiculo.telefono}</span></div>
+                        ` : '<p style="color:var(--text-secondary)">Sin datos de vehiculo</p>'}
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr><th>#</th><th>Descripcion</th><th class="text-center">Cant.</th><th class="text-end">Precio Unit.</th><th class="text-end">Subtotal</th></tr>
+                    </thead>
+                    <tbody>${itemsHtml}</tbody>
+                    <tfoot>
+                        <tr style="border-top: 2px solid var(--border-color);">
+                            <td colspan="4" class="text-end"><strong>TOTAL:</strong></td>
+                            <td class="text-end"><strong style="color: var(--secondary); font-size: 1.1rem;">${formatCurrency(p.total)}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                ${p.notas ? `<p class="mt-3" style="color: var(--text-secondary);"><strong>Notas:</strong> ${p.notas}</p>` : ''}
+            `;
+            detalleModalInst.show();
+        }
+    </script>
+</body>
+</html>

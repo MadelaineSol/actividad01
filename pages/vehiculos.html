@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehiculos - Taller Mecanico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-wrench logo-icon"></i>
+            <h3>AutoTaller Pro</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="./vehiculos.html" class="active"><i class="fas fa-car"></i> Vehiculos</a>
+            <a href="./ordenes.html"><i class="fas fa-clipboard-list"></i> Ordenes de Trabajo</a>
+            <a href="./presupuestos.html"><i class="fas fa-file-invoice-dollar"></i> Presupuestos</a>
+            <a href="./pagos.html"><i class="fas fa-money-bill-wave"></i> Ordenes de Pago</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-car me-2"></i>Vehiculos</h1>
+            <button class="btn btn-primary-custom" onclick="openModal()">
+                <i class="fas fa-plus me-2"></i>Nuevo Vehiculo
+            </button>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="form-control" placeholder="Buscar por patente, marca, propietario..." id="searchInput" oninput="renderTable()">
+                </div>
+                <span style="color: var(--text-secondary);" id="totalCount"></span>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Patente</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Color</th>
+                            <th>Propietario</th>
+                            <th>Telefono</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="vehiculoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Nuevo Vehiculo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="vehiculoForm">
+                        <input type="hidden" id="vehiculoId">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Patente *</label>
+                                <input type="text" class="form-control" id="patente" required placeholder="ABC 123" style="text-transform: uppercase;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Marca *</label>
+                                <input type="text" class="form-control" id="marca" required placeholder="Ej: Ford">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Modelo *</label>
+                                <input type="text" class="form-control" id="modelo" required placeholder="Ej: Focus">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Año</label>
+                                <input type="number" class="form-control" id="anio" placeholder="2024" min="1900" max="2030">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Color</label>
+                                <input type="text" class="form-control" id="color" placeholder="Ej: Rojo">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Kilometraje</label>
+                                <input type="number" class="form-control" id="kilometraje" placeholder="Ej: 50000">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">N° Motor</label>
+                                <input type="text" class="form-control" id="motor" placeholder="N° de motor">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">N° Chasis</label>
+                                <input type="text" class="form-control" id="chasis" placeholder="N° de chasis">
+                            </div>
+                            <hr>
+                            <div class="col-md-6">
+                                <label class="form-label">Propietario *</label>
+                                <input type="text" class="form-control" id="propietario" required placeholder="Nombre completo">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">DNI</label>
+                                <input type="text" class="form-control" id="dni" placeholder="DNI del propietario">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Telefono *</label>
+                                <input type="tel" class="form-control" id="telefono" required placeholder="Ej: 11-2345-6789">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="saveVehiculo()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        let modal;
+        document.addEventListener('DOMContentLoaded', () => {
+            modal = new bootstrap.Modal(document.getElementById('vehiculoModal'));
+            renderTable();
+        });
+
+        function renderTable() {
+            const search = document.getElementById('searchInput').value;
+            const vehiculos = search ? Vehiculos.search(search) : Vehiculos.getAll();
+            const tbody = document.getElementById('tableBody');
+            document.getElementById('totalCount').textContent = vehiculos.length + ' vehiculo(s)';
+
+            if (vehiculos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-car"></i><p>No hay vehiculos registrados</p></div></td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = vehiculos.map(v => `
+                <tr>
+                    <td><strong>${v.patente}</strong></td>
+                    <td>${v.marca}</td>
+                    <td>${v.modelo}</td>
+                    <td>${v.anio || '-'}</td>
+                    <td>${v.color || '-'}</td>
+                    <td>${v.propietario}</td>
+                    <td>${v.telefono}</td>
+                    <td>
+                        <button class="btn-action edit" onclick="editVehiculo(${v.id})" title="Editar"><i class="fas fa-pen"></i></button>
+                        <button class="btn-action delete" onclick="deleteVehiculo(${v.id})" title="Eliminar"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openModal(id = null) {
+            document.getElementById('vehiculoForm').reset();
+            document.getElementById('vehiculoId').value = '';
+            document.getElementById('modalTitle').textContent = id ? 'Editar Vehiculo' : 'Nuevo Vehiculo';
+            if (id) {
+                const v = Vehiculos.getById(id);
+                if (v) {
+                    document.getElementById('vehiculoId').value = v.id;
+                    document.getElementById('patente').value = v.patente;
+                    document.getElementById('marca').value = v.marca;
+                    document.getElementById('modelo').value = v.modelo;
+                    document.getElementById('anio').value = v.anio || '';
+                    document.getElementById('color').value = v.color || '';
+                    document.getElementById('kilometraje').value = v.kilometraje || '';
+                    document.getElementById('motor').value = v.motor || '';
+                    document.getElementById('chasis').value = v.chasis || '';
+                    document.getElementById('propietario').value = v.propietario;
+                    document.getElementById('dni').value = v.dni || '';
+                    document.getElementById('telefono').value = v.telefono;
+                    document.getElementById('email').value = v.email || '';
+                }
+            }
+            modal.show();
+        }
+
+        function editVehiculo(id) { openModal(id); }
+
+        function saveVehiculo() {
+            const form = document.getElementById('vehiculoForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+
+            const vehiculo = {
+                patente: document.getElementById('patente').value.toUpperCase(),
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value,
+                anio: document.getElementById('anio').value ? parseInt(document.getElementById('anio').value) : null,
+                color: document.getElementById('color').value,
+                kilometraje: document.getElementById('kilometraje').value ? parseInt(document.getElementById('kilometraje').value) : null,
+                motor: document.getElementById('motor').value,
+                chasis: document.getElementById('chasis').value,
+                propietario: document.getElementById('propietario').value,
+                dni: document.getElementById('dni').value,
+                telefono: document.getElementById('telefono').value,
+                email: document.getElementById('email').value
+            };
+
+            const id = document.getElementById('vehiculoId').value;
+            if (id) vehiculo.id = parseInt(id);
+
+            Vehiculos.save(vehiculo);
+            modal.hide();
+            renderTable();
+            showToast(id ? 'Vehiculo actualizado' : 'Vehiculo registrado');
+        }
+
+        function deleteVehiculo(id) {
+            if (confirm('¿Eliminar este vehiculo?')) {
+                Vehiculos.delete(id);
+                renderTable();
+                showToast('Vehiculo eliminado', 'warning');
+            }
+        }
+    </script>
+</body>
+</html>
