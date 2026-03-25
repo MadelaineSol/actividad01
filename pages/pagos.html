@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenes de Pago - Taller Mecanico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-wrench logo-icon"></i>
+            <h3>AutoTaller Pro</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="./vehiculos.html"><i class="fas fa-car"></i> Vehiculos</a>
+            <a href="./ordenes.html"><i class="fas fa-clipboard-list"></i> Ordenes de Trabajo</a>
+            <a href="./presupuestos.html"><i class="fas fa-file-invoice-dollar"></i> Presupuestos</a>
+            <a href="./pagos.html" class="active"><i class="fas fa-money-bill-wave"></i> Ordenes de Pago</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-money-bill-wave me-2"></i>Ordenes de Pago</h1>
+            <button class="btn btn-primary-custom" onclick="openModal()">
+                <i class="fas fa-plus me-2"></i>Nueva Orden de Pago
+            </button>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="form-control" placeholder="Buscar..." id="searchInput" oninput="renderTable()">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select" id="filterEstado" onchange="renderTable()">
+                    <option value="">Todos los estados</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Parcial">Parcial</option>
+                    <option value="Pagado">Pagado</option>
+                </select>
+            </div>
+            <div class="col-md-2 ms-auto text-end">
+                <span style="color: var(--text-secondary); line-height: 42px;" id="totalCount"></span>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>N° Pago</th>
+                            <th>Orden</th>
+                            <th>Cliente</th>
+                            <th>Monto Total</th>
+                            <th>Pagado</th>
+                            <th>Saldo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Nueva Orden de Pago -->
+    <div class="modal fade" id="pagoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nueva Orden de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="pagoForm">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label">Orden de Trabajo *</label>
+                                <select class="form-select" id="ordenId" required onchange="autoFillMonto()">
+                                    <option value="">Seleccionar orden...</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Monto Total *</label>
+                                <input type="number" class="form-control" id="montoTotal" required min="0" step="0.01" placeholder="0.00">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Concepto</label>
+                                <textarea class="form-control" id="concepto" rows="2" placeholder="Detalle del pago..."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="savePago()">Crear Orden de Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Registrar Pago -->
+    <div class="modal fade" id="registrarPagoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="registrarPagoId">
+                    <div class="p-3 mb-3" style="background: var(--bg-input); border-radius: 8px;">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span style="color: var(--text-secondary)">Monto Total:</span>
+                            <strong id="infoMontoTotal">$0</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span style="color: var(--text-secondary)">Ya pagado:</span>
+                            <strong id="infoPagado" style="color: var(--secondary)">$0</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span style="color: var(--text-secondary)">Saldo restante:</span>
+                            <strong id="infoSaldo" style="color: #ef5350">$0</strong>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label">Monto a pagar *</label>
+                            <input type="number" class="form-control" id="montoPago" required min="0.01" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Metodo de pago *</label>
+                            <select class="form-select" id="metodoPago" required>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta de Débito">Tarjeta de Debito</option>
+                                <option value="Tarjeta de Crédito">Tarjeta de Credito</option>
+                                <option value="Transferencia">Transferencia</option>
+                                <option value="Cheque">Cheque</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="confirmarPago()">Registrar Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalle -->
+    <div class="modal fade" id="detalleModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalle de Orden de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="detalleBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="window.print()"><i class="fas fa-print me-2"></i>Imprimir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        let pagoModalInst, registrarPagoModalInst, detalleModalInst;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            pagoModalInst = new bootstrap.Modal(document.getElementById('pagoModal'));
+            registrarPagoModalInst = new bootstrap.Modal(document.getElementById('registrarPagoModal'));
+            detalleModalInst = new bootstrap.Modal(document.getElementById('detalleModal'));
+            renderTable();
+        });
+
+        function loadOrdenesSelect() {
+            const select = document.getElementById('ordenId');
+            const ordenes = Ordenes.getAll();
+            select.innerHTML = '<option value="">Seleccionar orden...</option>' +
+                ordenes.map(o => {
+                    const v = Vehiculos.getById(o.vehiculoId);
+                    return `<option value="${o.id}">${o.numero} - ${v ? v.patente + ' (' + v.propietario + ')' : 'Sin vehiculo'}</option>`;
+                }).join('');
+        }
+
+        function autoFillMonto() {
+            const ordenId = parseInt(document.getElementById('ordenId').value);
+            if (!ordenId) return;
+            const presupuestos = Presupuestos.getAll().filter(p => p.ordenId === ordenId && p.estado === 'Aprobado');
+            if (presupuestos.length > 0) {
+                document.getElementById('montoTotal').value = presupuestos[0].total;
+            }
+        }
+
+        function renderTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const estadoFilter = document.getElementById('filterEstado').value;
+            let pagos = Pagos.getAll();
+
+            if (search) {
+                pagos = pagos.filter(p => {
+                    const orden = Ordenes.getById(p.ordenId);
+                    const vehiculo = orden ? Vehiculos.getById(orden.vehiculoId) : null;
+                    return p.numero.toLowerCase().includes(search) ||
+                        (orden && orden.numero.toLowerCase().includes(search)) ||
+                        (vehiculo && vehiculo.propietario.toLowerCase().includes(search));
+                });
+            }
+            if (estadoFilter) pagos = pagos.filter(p => p.estado === estadoFilter);
+
+            document.getElementById('totalCount').textContent = pagos.length + ' orden(es)';
+            const tbody = document.getElementById('tableBody');
+
+            if (pagos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-money-bill-wave"></i><p>No hay ordenes de pago</p></div></td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = pagos.reverse().map(p => {
+                const orden = Ordenes.getById(p.ordenId);
+                const vehiculo = orden ? Vehiculos.getById(orden.vehiculoId) : null;
+                const pagado = Pagos.getTotalPagado(p);
+                const saldo = p.montoTotal - pagado;
+                return `<tr>
+                    <td><strong>${p.numero}</strong></td>
+                    <td>${orden ? orden.numero : '-'}</td>
+                    <td>${vehiculo ? vehiculo.propietario : '-'}</td>
+                    <td>${formatCurrency(p.montoTotal)}</td>
+                    <td style="color: var(--secondary)">${formatCurrency(pagado)}</td>
+                    <td style="color: ${saldo > 0 ? '#ef5350' : '#66bb6a'}">${formatCurrency(saldo)}</td>
+                    <td><span class="badge-status ${getBadgeClass(p.estado)}">${p.estado}</span></td>
+                    <td>
+                        <button class="btn-action view" onclick="verDetalle(${p.id})" title="Ver detalle"><i class="fas fa-eye"></i></button>
+                        ${p.estado !== 'Pagado' ? `<button class="btn-action" onclick="openRegistrarPago(${p.id})" title="Registrar pago" style="color:#66bb6a"><i class="fas fa-dollar-sign"></i></button>` : ''}
+                        <button class="btn-action delete" onclick="deletePago(${p.id})" title="Eliminar"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function openModal() {
+            document.getElementById('pagoForm').reset();
+            loadOrdenesSelect();
+            pagoModalInst.show();
+        }
+
+        function savePago() {
+            const form = document.getElementById('pagoForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+
+            const pago = {
+                ordenId: parseInt(document.getElementById('ordenId').value),
+                montoTotal: parseFloat(document.getElementById('montoTotal').value),
+                concepto: document.getElementById('concepto').value
+            };
+
+            Pagos.save(pago);
+            pagoModalInst.hide();
+            renderTable();
+            showToast('Orden de pago creada');
+        }
+
+        function openRegistrarPago(id) {
+            const p = Pagos.getById(id);
+            const pagado = Pagos.getTotalPagado(p);
+            const saldo = p.montoTotal - pagado;
+
+            document.getElementById('registrarPagoId').value = id;
+            document.getElementById('infoMontoTotal').textContent = formatCurrency(p.montoTotal);
+            document.getElementById('infoPagado').textContent = formatCurrency(pagado);
+            document.getElementById('infoSaldo').textContent = formatCurrency(saldo);
+            document.getElementById('montoPago').value = '';
+            document.getElementById('montoPago').max = saldo;
+            document.getElementById('metodoPago').value = 'Efectivo';
+
+            registrarPagoModalInst.show();
+        }
+
+        function confirmarPago() {
+            const id = parseInt(document.getElementById('registrarPagoId').value);
+            const monto = parseFloat(document.getElementById('montoPago').value);
+            const metodo = document.getElementById('metodoPago').value;
+
+            if (!monto || monto <= 0) {
+                showToast('Ingrese un monto valido', 'error');
+                return;
+            }
+
+            Pagos.registrarPago(id, monto, metodo);
+            registrarPagoModalInst.hide();
+            renderTable();
+            showToast('Pago registrado por ' + formatCurrency(monto));
+        }
+
+        function deletePago(id) {
+            if (confirm('¿Eliminar esta orden de pago?')) {
+                Pagos.delete(id);
+                renderTable();
+                showToast('Orden de pago eliminada', 'warning');
+            }
+        }
+
+        function verDetalle(id) {
+            const p = Pagos.getById(id);
+            const orden = Ordenes.getById(p.ordenId);
+            const vehiculo = orden ? Vehiculos.getById(orden.vehiculoId) : null;
+            const pagado = Pagos.getTotalPagado(p);
+            const saldo = p.montoTotal - pagado;
+            const body = document.getElementById('detalleBody');
+
+            let pagosHtml = '';
+            if (p.pagosRealizados && p.pagosRealizados.length > 0) {
+                pagosHtml = `
+                    <h6 class="mt-4 mb-3">Pagos Realizados</h6>
+                    <table class="table">
+                        <thead><tr><th>Fecha</th><th>Metodo</th><th class="text-end">Monto</th></tr></thead>
+                        <tbody>
+                            ${p.pagosRealizados.map(pg => `
+                                <tr>
+                                    <td>${formatDateTime(pg.fecha)}</td>
+                                    <td>${pg.metodo}</td>
+                                    <td class="text-end">${formatCurrency(pg.monto)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            body.innerHTML = `
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 style="color: var(--secondary)">Orden de Pago ${p.numero}</h6>
+                        <div class="detail-row"><span class="detail-label">Estado:</span><span class="detail-value"><span class="badge-status ${getBadgeClass(p.estado)}">${p.estado}</span></span></div>
+                        <div class="detail-row"><span class="detail-label">Fecha:</span><span class="detail-value">${formatDate(p.fecha)}</span></div>
+                        <div class="detail-row"><span class="detail-label">Orden trabajo:</span><span class="detail-value">${orden ? orden.numero : '-'}</span></div>
+                        <div class="detail-row"><span class="detail-label">Concepto:</span><span class="detail-value">${p.concepto || '-'}</span></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 style="color: var(--secondary)">Resumen Financiero</h6>
+                        <div class="detail-row"><span class="detail-label">Monto Total:</span><span class="detail-value"><strong>${formatCurrency(p.montoTotal)}</strong></span></div>
+                        <div class="detail-row"><span class="detail-label">Pagado:</span><span class="detail-value" style="color: var(--secondary)">${formatCurrency(pagado)}</span></div>
+                        <div class="detail-row"><span class="detail-label">Saldo:</span><span class="detail-value" style="color: ${saldo > 0 ? '#ef5350' : '#66bb6a'}"><strong>${formatCurrency(saldo)}</strong></span></div>
+                        ${vehiculo ? `
+                            <hr>
+                            <div class="detail-row"><span class="detail-label">Cliente:</span><span class="detail-value">${vehiculo.propietario}</span></div>
+                            <div class="detail-row"><span class="detail-label">Vehiculo:</span><span class="detail-value">${vehiculo.patente} - ${vehiculo.marca} ${vehiculo.modelo}</span></div>
+                        ` : ''}
+                    </div>
+                </div>
+                ${pagosHtml}
+            `;
+            detalleModalInst.show();
+        }
+    </script>
+</body>
+</html>

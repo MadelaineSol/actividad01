@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenes de Trabajo - Taller Mecanico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-wrench logo-icon"></i>
+            <h3>AutoTaller Pro</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="./vehiculos.html"><i class="fas fa-car"></i> Vehiculos</a>
+            <a href="./ordenes.html" class="active"><i class="fas fa-clipboard-list"></i> Ordenes de Trabajo</a>
+            <a href="./presupuestos.html"><i class="fas fa-file-invoice-dollar"></i> Presupuestos</a>
+            <a href="./pagos.html"><i class="fas fa-money-bill-wave"></i> Ordenes de Pago</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-clipboard-list me-2"></i>Ordenes de Trabajo</h1>
+            <button class="btn btn-primary-custom" onclick="openModal()">
+                <i class="fas fa-plus me-2"></i>Nueva Orden
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="form-control" placeholder="Buscar por N°, patente, descripcion..." id="searchInput" oninput="renderTable()">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select" id="filterEstado" onchange="renderTable()">
+                    <option value="">Todos los estados</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En Progreso">En Progreso</option>
+                    <option value="Completado">Completado</option>
+                    <option value="Entregado">Entregado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+            </div>
+            <div class="col-md-2 ms-auto text-end">
+                <span style="color: var(--text-secondary); line-height: 42px;" id="totalCount"></span>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>N° Orden</th>
+                            <th>Vehiculo</th>
+                            <th>Propietario</th>
+                            <th>Descripcion</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Nueva/Editar Orden -->
+    <div class="modal fade" id="ordenModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Nueva Orden de Trabajo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="ordenForm">
+                        <input type="hidden" id="ordenId">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Vehiculo *</label>
+                                <select class="form-select" id="vehiculoId" required>
+                                    <option value="">Seleccionar vehiculo...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Descripcion del trabajo *</label>
+                                <textarea class="form-control" id="descripcion" rows="3" required placeholder="Describa el trabajo a realizar..."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Kilometraje de ingreso</label>
+                                <input type="number" class="form-control" id="kmIngreso" placeholder="Km actual">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Prioridad</label>
+                                <select class="form-select" id="prioridad">
+                                    <option value="Normal">Normal</option>
+                                    <option value="Alta">Alta</option>
+                                    <option value="Urgente">Urgente</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Observaciones</label>
+                                <textarea class="form-control" id="observaciones" rows="2" placeholder="Notas adicionales..."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="saveOrden()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalle -->
+    <div class="modal fade" id="detalleModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalle de Orden</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="detalleBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="printDetalle()"><i class="fas fa-print me-2"></i>Imprimir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cambiar Estado -->
+    <div class="modal fade" id="estadoModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar Estado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="estadoOrdenId">
+                    <label class="form-label">Nuevo estado</label>
+                    <select class="form-select" id="nuevoEstado">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En Progreso">En Progreso</option>
+                        <option value="Completado">Completado</option>
+                        <option value="Entregado">Entregado</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="confirmarCambioEstado()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        let ordenModalInst, detalleModalInst, estadoModalInst;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ordenModalInst = new bootstrap.Modal(document.getElementById('ordenModal'));
+            detalleModalInst = new bootstrap.Modal(document.getElementById('detalleModal'));
+            estadoModalInst = new bootstrap.Modal(document.getElementById('estadoModal'));
+            renderTable();
+        });
+
+        function loadVehiculosSelect() {
+            const select = document.getElementById('vehiculoId');
+            const vehiculos = Vehiculos.getAll();
+            select.innerHTML = '<option value="">Seleccionar vehiculo...</option>' +
+                vehiculos.map(v => `<option value="${v.id}">${v.patente} - ${v.marca} ${v.modelo} (${v.propietario})</option>`).join('');
+        }
+
+        function renderTable() {
+            const search = document.getElementById('searchInput').value;
+            const estadoFilter = document.getElementById('filterEstado').value;
+            let ordenes = search ? Ordenes.search(search) : Ordenes.getAll();
+            if (estadoFilter) ordenes = ordenes.filter(o => o.estado === estadoFilter);
+
+            document.getElementById('totalCount').textContent = ordenes.length + ' orden(es)';
+            const tbody = document.getElementById('tableBody');
+
+            if (ordenes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><i class="fas fa-clipboard-list"></i><p>No hay ordenes de trabajo</p></div></td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = ordenes.reverse().map(o => {
+                const v = Vehiculos.getById(o.vehiculoId);
+                return `<tr>
+                    <td><strong>${o.numero}</strong></td>
+                    <td>${v ? v.patente + ' - ' + v.marca + ' ' + v.modelo : '-'}</td>
+                    <td>${v ? v.propietario : '-'}</td>
+                    <td>${o.descripcion.substring(0, 50)}${o.descripcion.length > 50 ? '...' : ''}</td>
+                    <td>
+                        <span class="badge-status ${getBadgeClass(o.estado)}" style="cursor:pointer" onclick="openEstadoModal(${o.id})" title="Click para cambiar estado">
+                            ${o.estado} <i class="fas fa-exchange-alt ms-1" style="font-size:0.7rem"></i>
+                        </span>
+                    </td>
+                    <td>${formatDate(o.fechaCreacion)}</td>
+                    <td>
+                        <button class="btn-action view" onclick="verDetalle(${o.id})" title="Ver detalle"><i class="fas fa-eye"></i></button>
+                        <button class="btn-action edit" onclick="editOrden(${o.id})" title="Editar"><i class="fas fa-pen"></i></button>
+                        <button class="btn-action delete" onclick="deleteOrden(${o.id})" title="Eliminar"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function openModal(id = null) {
+            document.getElementById('ordenForm').reset();
+            document.getElementById('ordenId').value = '';
+            document.getElementById('modalTitle').textContent = id ? 'Editar Orden' : 'Nueva Orden de Trabajo';
+            loadVehiculosSelect();
+
+            if (id) {
+                const o = Ordenes.getById(id);
+                if (o) {
+                    document.getElementById('ordenId').value = o.id;
+                    document.getElementById('vehiculoId').value = o.vehiculoId;
+                    document.getElementById('descripcion').value = o.descripcion;
+                    document.getElementById('kmIngreso').value = o.kmIngreso || '';
+                    document.getElementById('prioridad').value = o.prioridad || 'Normal';
+                    document.getElementById('observaciones').value = o.observaciones || '';
+                }
+            }
+            ordenModalInst.show();
+        }
+
+        function editOrden(id) { openModal(id); }
+
+        function saveOrden() {
+            const form = document.getElementById('ordenForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+
+            const orden = {
+                vehiculoId: parseInt(document.getElementById('vehiculoId').value),
+                descripcion: document.getElementById('descripcion').value,
+                kmIngreso: document.getElementById('kmIngreso').value ? parseInt(document.getElementById('kmIngreso').value) : null,
+                prioridad: document.getElementById('prioridad').value,
+                observaciones: document.getElementById('observaciones').value
+            };
+
+            const id = document.getElementById('ordenId').value;
+            if (id) orden.id = parseInt(id);
+
+            Ordenes.save(orden);
+            ordenModalInst.hide();
+            renderTable();
+            showToast(id ? 'Orden actualizada' : 'Orden creada');
+        }
+
+        function deleteOrden(id) {
+            if (confirm('¿Eliminar esta orden?')) {
+                Ordenes.delete(id);
+                renderTable();
+                showToast('Orden eliminada', 'warning');
+            }
+        }
+
+        function openEstadoModal(id) {
+            const o = Ordenes.getById(id);
+            document.getElementById('estadoOrdenId').value = id;
+            document.getElementById('nuevoEstado').value = o.estado;
+            estadoModalInst.show();
+        }
+
+        function confirmarCambioEstado() {
+            const id = parseInt(document.getElementById('estadoOrdenId').value);
+            const nuevoEstado = document.getElementById('nuevoEstado').value;
+            Ordenes.cambiarEstado(id, nuevoEstado);
+            estadoModalInst.hide();
+            renderTable();
+            showToast('Estado actualizado a: ' + nuevoEstado);
+        }
+
+        function verDetalle(id) {
+            const o = Ordenes.getById(id);
+            const v = Vehiculos.getById(o.vehiculoId);
+            const body = document.getElementById('detalleBody');
+
+            let historialHtml = '';
+            if (o.historial && o.historial.length > 0) {
+                historialHtml = '<h6 class="mt-4 mb-3">Historial</h6><div class="timeline">' +
+                    o.historial.map(h => `
+                        <div class="timeline-item">
+                            <div class="timeline-date">${formatDateTime(h.fecha)}</div>
+                            <div class="timeline-text">${h.accion}</div>
+                        </div>
+                    `).join('') + '</div>';
+            }
+
+            body.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3" style="color: var(--secondary)">Orden ${o.numero}</h6>
+                        <div class="detail-row"><span class="detail-label">Estado:</span><span class="detail-value"><span class="badge-status ${getBadgeClass(o.estado)}">${o.estado}</span></span></div>
+                        <div class="detail-row"><span class="detail-label">Prioridad:</span><span class="detail-value">${o.prioridad || 'Normal'}</span></div>
+                        <div class="detail-row"><span class="detail-label">Fecha creacion:</span><span class="detail-value">${formatDateTime(o.fechaCreacion)}</span></div>
+                        <div class="detail-row"><span class="detail-label">Descripcion:</span><span class="detail-value">${o.descripcion}</span></div>
+                        <div class="detail-row"><span class="detail-label">Observaciones:</span><span class="detail-value">${o.observaciones || '-'}</span></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="mb-3" style="color: var(--secondary)">Vehiculo</h6>
+                        ${v ? `
+                            <div class="detail-row"><span class="detail-label">Patente:</span><span class="detail-value">${v.patente}</span></div>
+                            <div class="detail-row"><span class="detail-label">Vehiculo:</span><span class="detail-value">${v.marca} ${v.modelo} ${v.anio || ''}</span></div>
+                            <div class="detail-row"><span class="detail-label">Propietario:</span><span class="detail-value">${v.propietario}</span></div>
+                            <div class="detail-row"><span class="detail-label">Telefono:</span><span class="detail-value">${v.telefono}</span></div>
+                            <div class="detail-row"><span class="detail-label">Km ingreso:</span><span class="detail-value">${o.kmIngreso || '-'}</span></div>
+                        ` : '<p style="color:var(--text-secondary)">Vehiculo no encontrado</p>'}
+                    </div>
+                </div>
+                ${historialHtml}
+            `;
+            detalleModalInst.show();
+        }
+
+        function printDetalle() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
