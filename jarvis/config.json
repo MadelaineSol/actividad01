@@ -1,0 +1,28 @@
+{
+  "clap_detection": {
+    "threshold": 0.25,
+    "min_clap_gap_ms": 150,
+    "max_clap_gap_ms": 800,
+    "cooldown_seconds": 3,
+    "sample_rate": 44100,
+    "buffer_size": 1024
+  },
+  "apps": {
+    "browser": {
+      "url": "https://www.google.com",
+      "candidates": ["google-chrome", "google-chrome-stable", "chromium-browser", "chromium", "firefox"]
+    },
+    "spotify": {
+      "playlist_url": "spotify:playlist:37i9dQZF1DXcBWIGoYBM5M",
+      "playlist_web_url": "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
+      "candidates": ["spotify", "flatpak run com.spotify.Client"]
+    },
+    "editor": {
+      "candidates": ["code", "code-insiders", "codium", "gedit"]
+    }
+  },
+  "trigger": {
+    "clap_count": 2,
+    "description": "Doble aplauso para activar"
+  }
+}
